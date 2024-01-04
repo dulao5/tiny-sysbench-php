@@ -1,0 +1,58 @@
+version: "3.9"
+services:
+  nginx:
+    build: ./docker/nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - php
+    links:
+      - gatling
+    volumes:
+      - ./app/public:/var/www/html/public
+    networks:
+      nginx_network:
+        aliases:
+          - nginx
+        ipv4_address: 10.10.10.20
+  php:
+    build: ./docker/php
+    volumes:
+      - ./app:/var/www/html
+    networks:
+      nginx_network:
+        aliases:
+          - php
+        ipv4_address: 10.10.10.10
+    environment:
+      - DB_HOST=docker.for.mac.host.internal
+      - DB_PORT=4000
+      - DB_USER=root
+      - DB_PASS=
+      - DB_NAME=test
+      - OLTP_TABLE_SIZE=100000
+      - OLTP_TABLE_COUNT=100
+      - OLTP_DB_COUNT=50
+  gatling:
+    build: ./gatling
+    stdin_open: true
+    tty: true
+    volumes:
+      - ./gatling/scenario/:/workdir/gatling-charts-highcharts-bundle-3.3.1/user-files/simulations
+      - gatlingdata:/workdir/gatling-charts-highcharts-bundle-3.3.1/results
+    command: /bin/bash
+    networks:
+      nginx_network:
+        aliases:
+          - nginx
+        ipv4_address: 10.10.10.90
+volumes:
+  gatlingdata:
+networks:
+  nginx_network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 10.10.10.0/24
+
+
