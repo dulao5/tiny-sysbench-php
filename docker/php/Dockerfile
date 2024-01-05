@@ -18,4 +18,5 @@ ENV PATH="${PATH}:/root/.composer/vendor/bin"
 WORKDIR /var/www/html
 
 # COPY
+COPY php-fpm.d/www.conf /usr/local/etc/php-fpm.d/www.conf
 #docker-build# COPY ./laravel-app /var/www/html

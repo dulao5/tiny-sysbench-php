@@ -25,14 +25,16 @@ services:
           - php
         ipv4_address: 10.10.10.10
     environment:
-      - DB_HOST=docker.for.mac.host.internal
+      - DB_HOST=
       - DB_PORT=4000
       - DB_USER=root
       - DB_PASS=
-      - DB_NAME=test
+      - DB_NAME=sbtest000
       - OLTP_TABLE_SIZE=100000
       - OLTP_TABLE_COUNT=100
-      - OLTP_DB_COUNT=50
+        #- DB_PERSISTENT_CONN=1
+        #- SYSBENCH_MULTI_DB=1
+        #- OLTP_DB_COUNT=50
   gatling:
     build: ./gatling
     stdin_open: true
