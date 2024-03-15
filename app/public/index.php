@@ -4,7 +4,7 @@ define('DB_HOST', getenv('DB_HOST') ? getenv('DB_HOST') : '127.0.0.1');
 define('DB_PORT', getenv('DB_PORT') ? getenv('DB_PORT') : 4000);
 define('DB_NAME', getenv('DB_NAME') ? getenv('DB_NAME') : 'test');
 define('DB_USER', getenv('DB_USER') ? getenv('DB_USER') : 'root');
-define('DB_PASSWORD', getenv('DB_PASSWORD') ? getenv('DB_PASSWORD') : '');
+define('DB_PASS', getenv('DB_PASS') ? getenv('DB_PASS') : '');
 
 define('DB_PERSISTENT_CONN', getenv('DB_PERSISTENT_CONN') ? getenv('DB_PERSISTENT_CONN') : false);
 
@@ -44,7 +44,7 @@ if (SYSBENCH_MULTI_DB) {
 
 // 创建 PDO 对象
 try {
-    $pdo = new PDO(PDO_DSN, DB_USER, DB_PASSWORD, $pdoAttrs);
+    $pdo = new PDO(PDO_DSN, DB_USER, DB_PASS, $pdoAttrs);
 } catch (PDOException $e) {
     die("Error connecting to the database: " . $e->getMessage());
 }
